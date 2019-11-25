@@ -3,7 +3,7 @@ static struct sockaddr_in remote_addr;
 static int udp_socket;
 static unsigned int socklen;
 
-esp_err_t creat_udp_server(void)
+esp_err_t create_udp_server(void)
 {
 	int optval = 1;
 
@@ -40,9 +40,23 @@ void udp_recv_task(void)
 	while(1){
 		
 		memset(data_buff, 0, 512);
+		datalen = recvfrom(mysocket,data_buff,512,0,(struct sockaddr *)&remote_addr,&socklen);
+		if(datalen > 0){
+			AT_CMD_parser(data_buff);
+		}else{
+			break;
+		}
+
 		
 	}
+	free(data_buff);
 
+}
+
+void close_udp_socket(void){
+	if(mysocket == -1){
+		close(mysocket);
+	}
 }
 void udp_conn(void *context)
 {
@@ -57,7 +71,11 @@ void udp_conn(void *context)
 			vTaskDelete(NULL);
 		}
 		//start udp rev task
+		udp_recv_socket();
+		close_udp_socket();
 	}
+
+	vTaskDelete(NULL);
 }
 
 

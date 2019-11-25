@@ -1,0 +1,29 @@
+
+/* strchr-------------------------------------------------------------------begin */
+
+char *strchr(const char*str,int c) 
+功能：在参数str所指向的字符串中搜索第一次出现字符c（一个无符号字符）的位置
+	str -- 要检索的字符串
+	c  -- 在str中要检索的字符
+返回：在字符串str中第一次出现字符c的位置，如果未找到该字符则返回NULL
+
+示例：
+#include "stdio.h"
+#include "string.h"
+
+int main()
+{
+	const char str[] = "http://www.runoob.com";
+	char *pstr = NULL;
+
+	pstr = strchr(str,'.');
+
+	printf("|%c|之后的字符串是：|%s|\n",ch,pstr);
+
+	return 0;
+}
+
+logout:|.|之后的字符串是：|.runoob.com|
+
+/* strchr-------------------------------------------------------------------end */
+	
